@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<project name="Oracle ATG" default="dist" basedir=".">
+<project name="Oracle ATG Plugin" default="dist" basedir=".">
 
     <property name="version" value="1.0.0" />
     <property name="filename" value="newrelic_oracle_atg_plugin-${version}"/>

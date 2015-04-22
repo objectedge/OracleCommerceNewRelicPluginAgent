@@ -4,7 +4,7 @@
       "name" : "Estore1",
       "host" : "HOSTNAME1",
       "port" : "PORT1"
-    }
+    },
      {
       "name" : "Estore2",
       "host" : "HOSTNAME2",

@@ -68,6 +68,7 @@
             <fileset dir="${conf.dir}" />
         </copy>
         <copy file="${build.jar.dir}/${jarfile}" todir="${build.tar.src.dir}" />
+    	<copy file="README.md" todir="${build.tar.src.dir}" />
         <tar compression="gzip" destfile="${dist.dir}/${tarfile}">
             <tarfileset dir="${build.tar.dir}" />
         </tar>

@@ -14,7 +14,7 @@ import org.json.simple.JSONValue;
 
 import com.newrelic.metrics.publish.Agent;
 import com.newrelic.metrics.publish.configuration.ConfigurationException;
-import com.newrelic.metrics.publish.processors.EpochCounter;
+import com.newrelic.metrics.publish.processors.EpochProcessor;
 import com.newrelic.metrics.publish.processors.Processor;
 
 /**
@@ -46,7 +46,7 @@ public class MonitoringAgent extends Agent {
         try {
             this.name = name;
             this.url = new URL(HTTP,host,port, ATG_INSTANCE_URL);
-            this.repositoryCreationRate = new EpochCounter();
+            this.repositoryCreationRate = new EpochProcessor();
         } catch (MalformedURLException e) {
             throw new ConfigurationException("ATG Statistics Engine metric URL could not be parsed", e);
         }
@@ -57,7 +57,7 @@ public class MonitoringAgent extends Agent {
         try {
             this.name = name;
             this.url = new URL(HTTP,host, ATG_INSTANCE_URL);
-            this.repositoryCreationRate = new EpochCounter();
+            this.repositoryCreationRate = new EpochProcessor();
         } catch (MalformedURLException e) {
             throw new ConfigurationException("ATG Statistics Engine metric URL could not be parsed", e);
         }
@@ -65,11 +65,12 @@ public class MonitoringAgent extends Agent {
 
 
 	@Override
-    public String getComponentHumanLabel() {
+    public String getAgentName() {
         return name;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void pollCycle() {
     	 JSONObject jsonObj = getJSONResponse();
     	 if (jsonObj != null) {
@@ -126,5 +127,4 @@ public class MonitoringAgent extends Agent {
         }
         return (JSONObject) response;
     }
-
 }

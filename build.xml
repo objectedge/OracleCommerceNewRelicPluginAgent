@@ -17,7 +17,7 @@
     <property name="conf.dir" value="config" />
     <property name="dist.dir" location="dist" />
 
-    <property name="sdk.jar" value="${lib.dir}/metrics_publish-2.0.0.jar" />
+    <property name="sdk.jar" value="${lib.dir}/metrics_publish-2.0.1.jar" />
 
     <path id="classpath">
         <pathelement location="${sdk.jar}" />
@@ -69,6 +69,8 @@
         </copy>
         <copy file="${build.jar.dir}/${jarfile}" todir="${build.tar.src.dir}" />
     	<copy file="README.md" todir="${build.tar.src.dir}" />
+    	<copy file="startPlugin.sh" todir="${build.tar.src.dir}" />
+    	<copy file="stopPlugin.sh" todir="${build.tar.src.dir}" />
         <tar compression="gzip" destfile="${dist.dir}/${tarfile}">
             <tarfileset dir="${build.tar.dir}" />
         </tar>

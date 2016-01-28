@@ -31,7 +31,7 @@ public class MonitoringAgent extends Agent {
     private static final String VERSION = "1.0.0";
 
     private static final String HTTP = "http";
-    private static final String ATG_INSTANCE_URL = "/AtgStatisticsEngine/index.jsp";
+    private static final String ATG_INSTANCE_URL = "/oe-diagnostics/rest/api/metrics/get";
 
     private String name;
     private URL url;
@@ -73,7 +73,6 @@ public class MonitoringAgent extends Agent {
         return name;
     }
 
-    // @SuppressWarnings("unchecked")
 	@Override
     public void pollCycle() {
     	 try {

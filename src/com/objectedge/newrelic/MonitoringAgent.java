@@ -16,8 +16,6 @@ import org.apache.http.util.EntityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newrelic.metrics.publish.Agent;
 import com.newrelic.metrics.publish.configuration.ConfigurationException;
-import com.newrelic.metrics.publish.processors.EpochProcessor;
-import com.newrelic.metrics.publish.processors.Processor;
 import com.newrelic.metrics.publish.util.Logger;
 
 /**
@@ -31,11 +29,10 @@ public class MonitoringAgent extends Agent {
     private static final String VERSION = "1.0.0";
 
     private static final String HTTP = "http";
-    private static final String ATG_INSTANCE_URL = "/oe-diagnostics/rest/api/metrics/get";
+    private static final String ATG_METRICS_URI = "/oe-diagnostics/rest/api/metrics/get";
 
     private String name;
     private URL url;
-    private Processor repositoryCreationRate;
     
     private static Logger LOGGER = Logger.getLogger(MonitoringAgent.class);
 
@@ -50,8 +47,7 @@ public class MonitoringAgent extends Agent {
         super(GUID, VERSION);
         try {
             this.name = name;
-            this.url = new URL(HTTP,host,port, ATG_INSTANCE_URL);
-            this.repositoryCreationRate = new EpochProcessor();
+            this.url = new URL(HTTP,host,port, ATG_METRICS_URI);
         } catch (MalformedURLException e) {
             throw new ConfigurationException("ATG Statistics Engine metric URL could not be parsed", e);
         }
@@ -61,8 +57,7 @@ public class MonitoringAgent extends Agent {
     	super(GUID, VERSION);
         try {
             this.name = name;
-            this.url = new URL(HTTP,host, ATG_INSTANCE_URL);
-            this.repositoryCreationRate = new EpochProcessor();
+            this.url = new URL(HTTP,host, ATG_METRICS_URI);
         } catch (MalformedURLException e) {
             throw new ConfigurationException("ATG Statistics Engine metric URL could not be parsed", e);
         }
@@ -128,7 +123,7 @@ public class MonitoringAgent extends Agent {
             return httpclient.execute(httpget, responseHandler);
             
         } catch (ClientProtocolException e) {
-			e.printStackTrace();
+			e.getMessage();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -149,30 +144,5 @@ public class MonitoringAgent extends Agent {
 		
 		return urlStr.toString();
 	}
-    
-   
-    /*private JSONObject getJSONResponse() {
-        Object response = null;
-        InputStream inputStream = null;
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) url.openConnection();
-            connection.addRequestProperty("Accept", "application/json");
-            inputStream = connection.getInputStream();
-            response = JSONValue.parse(new InputStreamReader(inputStream));
-        } catch (IOException e) {
-            System.out.println("Error: Unable to access to agent at "+url.getHost()+":"+url.getPort());
-        } 	finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {}
-            }
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-        return (JSONObject) response;
-    }*/
     
 }

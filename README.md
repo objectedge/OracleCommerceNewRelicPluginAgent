@@ -1,7 +1,25 @@
-# Newrelic Oracle ATG Plugin
-This plugin collects metrics from all server instances in the form of JSON. This JSON format looks as follows:
+# Oracle Commerce NewRelic Plugin Agent
+-----------------------
+A simple agent that polls health information from Oracle Commerce servers and submits to NewRelic platform.
+
+## Requirements
+-----------------------
+This plugin has been tested to work with the following application stack:
+* Oracle Commerce 10.1.2
+* Java Runtime (JRE) environment Version 1.6 or later.
+* [Oracle Commerce NewRelic Plugin Module](https://github.com/objectedge/OracleCommerceNewRelicPlugin.git)
+* A New Relic account. Sign up for a free account [here](http://newrelic.com).
+
+## Configuration File Note
+-----------------------
+The configuration file uses YAML as its format. Please make sure you are properly formatting your configuration file prior to submitting a ticket. YAML is a whitespace dependent markup format. More information on writing proper YAML can be found at http://yaml.org.
+
+## How it works:
+-----------------------
+This plugin collects metrics from the configured server instances in the form of JSON. This JSON format looks as follows:
 
 ###### JSON response format:
+
 	{
 	  "success": "true|false",
 	  "status": "status code"
@@ -15,6 +33,7 @@ This plugin collects metrics from all server instances in the form of JSON. This
 	}
     
 ###### For Example:
+
 	{
 	  "success": "true",
 	  "status": 200
@@ -26,29 +45,23 @@ This plugin collects metrics from all server instances in the form of JSON. This
 	    }
 	  ]
 	}
-    
-----
 
-## Requirements
-- A New Relic account. Sign up for a free account [here](http://newrelic.com).
-- Java Runtime (JRE) environment Version 1.6 or later.
-
-----
 
 ## Installation
+-----------------------
 #### Step 1 - Downloading and Extracting the Plugin
 The latest version of the plugin can be downloaded [here](https://rpm.newrelic.com/extensions/com.objectedge.oracle.newrelic).  Once the plugin is on your box, extract it to a location.
 
 **Note** - This plugin is distributed in tar.gz format and can be extracted with the following command on Unix-based systems.
 
 ```
-tar -xvzf newrelic_wikipedia_plugin-X.Y.Z.tar.gz
+tar -xvzf newrelic_oracle_atg_plugin-1.0.0.tar.gz
 ```
 #### Step 2 - Configuring the plugin
 Check out the [configuration information](#configuration-information) section for details on configuring your plugin.
 
 #### Step 3 - Start and stop the Plugin
-To run the plugin, execute the startPlugin.sh shell script in terminal:
+To start the agent, execute the startPlugin.sh shell script in terminal:
 ```
 $ ./startPlugin.sh
 ```
@@ -60,11 +73,30 @@ $ ./stopPlugin.sh
 ----
 
 ## Configuration Information
-
+-----------------------
 ### Configuration Files
 
-You will need to modify two configuration files in order to set this plugin up to run.  The first (`newrelic.json`) contains configurations used by all Platform plugins (e.g. license key, logging information, proxy settings) and can be shared across your plugins.  The second (`plugin.json`) contains data specific to each plugin such as a list of hosts and port combination for what you are monitoring.  Templates for both of these files should be located in the '`config`' directory in your extracted plugin folder. 
+The plugin requries two files to be present during startup:
+* The first (`newrelic.json`) contains configurations used by all Platform plugins (e.g. license key, logging information, proxy settings) and can be shared across your plugins.
+* The second (`plugin.json`) contains data specific to each plugin such as a list of hosts and port combination for what you are monitoring. 
 
+#### Configuring the `newrelic.json` file: 
+
+The `newrelic.json` file also has a provided template in the `config` directory named `newrelic.template.json`.  If you are installing manually, make a copy of this template file and rename it to `newrelic.json`.  
+
+The `newrelic.json` is a standardized file containing configuration information that applies to any plugin (e.g. license key, logging, etc.), so going forward you will be able to copy a single `newrelic.json` file from one plugin to another.  Below is a list of the configuration fields that can be managed through this file:
+
+##### Configuring your New Relic License Key
+
+Your New Relic license key is the only required field in the `newrelic.json` file as it is used to determine what account you are reporting to.  If you do not know what your license key is, you can learn about it [here](https://newrelic.com/docs/subscriptions/license-key).
+
+Example: 
+
+```
+{
+  "license_key": "YOUR_LICENSE_KEY_HERE"
+}
+```
 #### Configuring the `plugin.json` file: 
 
 The `plugin.json` file has a provided template in the `config` directory named `plugin.template.json`.  If you are installing manually, make a copy of this template file and rename it to `plugin.json` (the New Relic Platform Installer will automatically handle creation of configuration files for you).  
@@ -97,23 +129,7 @@ Below is an example of the `plugin.json` file's contents, you can add multiple o
 
 **note** - The "name" attribute is used to identify specific instances in the New Relic UI. 
 
-#### Configuring the `newrelic.json` file: 
 
-The `newrelic.json` file also has a provided template in the `config` directory named `newrelic.template.json`.  If you are installing manually, make a copy of this template file and rename it to `newrelic.json`.  
-
-The `newrelic.json` is a standardized file containing configuration information that applies to any plugin (e.g. license key, logging, etc.), so going forward you will be able to copy a single `newrelic.json` file from one plugin to another.  Below is a list of the configuration fields that can be managed through this file:
-
-##### Configuring your New Relic License Key
-
-Your New Relic license key is the only required field in the `newrelic.json` file as it is used to determine what account you are reporting to.  If you do not know what your license key is, you can learn about it [here](https://newrelic.com/docs/subscriptions/license-key).
-
-Example: 
-
-```
-{
-  "license_key": "YOUR_LICENSE_KEY_HERE"
-}
-```
 
 ##### Logging configuration
 

@@ -29,7 +29,7 @@ public class MonitoringAgent extends Agent {
     private static final String VERSION = "1.0.0";
 
     private static final String HTTP = "http";
-    private static final String ATG_METRICS_URI = "/oe-diagnostics/rest/api/metrics/get";
+    private static final String ATG_METRICS_URI = "/newrelic/rest/api/metrics/get";
 
     private String name;
     private URL url;

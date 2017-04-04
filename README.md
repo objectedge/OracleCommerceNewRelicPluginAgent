@@ -5,7 +5,7 @@ A simple agent that polls health information from Oracle Commerce servers and su
 ## Requirements
 -----------------------
 This plugin has been tested to work with the following application stack:
-* Oracle Commerce 10.1.2
+* Oracle Commerce 10.1.2 or higher
 * Java Runtime (JRE) environment Version 1.6 or later.
 * [Oracle Commerce NewRelic Plugin Module](https://github.com/objectedge/OracleCommerceNewRelicPlugin.git)
 * A New Relic account. Sign up for a free account [here](http://newrelic.com).

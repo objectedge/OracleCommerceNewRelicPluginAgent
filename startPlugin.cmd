@@ -1,0 +1,1 @@
+start javaw -Xmx128m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n -jar plugin.jar
